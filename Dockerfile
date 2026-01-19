@@ -151,6 +151,7 @@ WORKDIR /argmin
 COPY . .
 
 # Configure with TSAN flags
+# Note: Skip gtest_discover_tests during build (TSAN needs special runtime privileges)
 RUN cmake -B build -G Ninja \
     -DCMAKE_BUILD_TYPE=Debug \
     -DCMAKE_CXX_COMPILER=g++-12 \
@@ -158,7 +159,8 @@ RUN cmake -B build -G Ninja \
     -DCMAKE_EXE_LINKER_FLAGS="-fsanitize=thread" \
     -DARGMIN_BUILD_TESTS=ON \
     -DARGMIN_BUILD_BENCHMARKS=ON \
-    -DARGMIN_USE_SPDLOG=OFF
+    -DARGMIN_USE_SPDLOG=OFF \
+    -DCMAKE_GTEST_DISCOVER_TESTS_DISCOVERY_MODE=PRE_TEST
 
 RUN cmake --build build --parallel $(nproc)
 

@@ -84,6 +84,11 @@ services:
       - .:/argmin
       - build-cache-tsan:/argmin/build
     command: ["./test/ArgMinTests", "--gtest_color=yes"]
+    # TSAN requires these security options to disable ASLR
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - seccomp=unconfined
 
   # UBSAN tests
   test-ubsan:
