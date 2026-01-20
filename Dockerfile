@@ -74,6 +74,26 @@ WORKDIR /argmin
 # Default to bash for interactive use
 CMD ["/bin/bash"]
 
+# Documentation stage - generates Sphinx + Breathe documentation
+FROM ubuntu:22.04 AS docs
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y \
+    doxygen \
+    graphviz \
+    python3 \
+    python3-pip \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Sphinx and dependencies
+COPY docs/requirements.txt /tmp/requirements.txt
+RUN pip3 install --no-cache-dir -r /tmp/requirements.txt
+
+WORKDIR /argmin
+
+CMD ["sh", "-c", "doxygen Doxyfile && sphinx-build -b html docs docs/_build/html"]
+
 # AddressSanitizer (ASAN) build stage - for memory safety testing
 FROM ubuntu:22.04 AS builder-asan
 

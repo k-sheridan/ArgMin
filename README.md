@@ -2,6 +2,7 @@
 
 [![Tests](https://github.com/k-sheridan/ArgMin/actions/workflows/test.yml/badge.svg)](https://github.com/k-sheridan/ArgMin/actions/workflows/test.yml)
 [![Benchmarks](https://github.com/k-sheridan/ArgMin/actions/workflows/benchmark.yml/badge.svg)](https://github.com/k-sheridan/ArgMin/actions/workflows/benchmark.yml)
+[![Documentation](https://github.com/k-sheridan/ArgMin/actions/workflows/docs.yml/badge.svg)](https://k-sheridan.github.io/ArgMin/)
 
 **Header-only generic optimizer for manifold-based nonlinear least squares**
 
