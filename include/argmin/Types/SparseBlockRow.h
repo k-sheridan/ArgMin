@@ -14,6 +14,17 @@ namespace ArgMin
 template <typename...>
 class SparseBlockRow;
 
+/**
+ * @brief A single row of a SparseBlockMatrix, containing blocks indexed by variable keys.
+ *
+ * Stores matrix blocks as a tuple of maps, one for each variable type. Each map contains
+ * blocks indexed by VariableKey. Supports dot product operations with dense vectors
+ * and BlockVectors.
+ *
+ * @tparam ScalarType The floating point type
+ * @tparam RowDimension The number of rows in each block (fixed at compile time)
+ * @tparam Variables... The variable types whose keys can index columns
+ */
 template <typename ScalarType, int RowDimension, typename... Variables>
 class SparseBlockRow<Scalar<ScalarType>, Dimension<RowDimension>, VariableGroup<Variables...>>
 {

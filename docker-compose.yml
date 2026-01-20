@@ -52,6 +52,33 @@ services:
     tty: true
     command: ["/bin/bash"]
 
+  # Generate documentation
+  docs:
+    build:
+      context: .
+      target: docs
+    image: argmin:docs
+    volumes:
+      - .:/argmin
+    command: ["sh", "-c", "doxygen Doxyfile && sphinx-build -b html docs docs/_build/html"]
+
+  # Serve documentation locally for preview
+  docs-serve:
+    build:
+      context: .
+      target: docs
+    image: argmin:docs
+    volumes:
+      - .:/argmin
+    ports:
+      - "8000:8000"
+    working_dir: /argmin
+    command: >
+      sh -c "doxygen Doxyfile &&
+             sphinx-build -b html docs docs/_build/html &&
+             echo 'Documentation available at http://localhost:8000' &&
+             python3 -m http.server 8000 --directory docs/_build/html"
+
   # ASAN tests
   test-asan:
     build:

@@ -15,6 +15,27 @@ namespace ArgMin {
 template <typename... T>
 class GaussianPrior;
 
+/**
+ * @brief Represents a Gaussian prior over the optimizer's variables.
+ *
+ * The GaussianPrior stores the accumulated information from marginalized variables
+ * and error terms as a quadratic cost function. It is represented as:
+ * - A0: Sparse block information matrix (inverse covariance)
+ * - b0: Dense mean vector
+ *
+ * The prior contributes to the optimization objective as: 0.5 * x^T * A0 * x - b0^T * x
+ *
+ * During marginalization, when a variable is removed from the problem, its contribution
+ * to the remaining variables is approximated and added to this Gaussian prior via the
+ * Schur complement. The sparse block format allows efficient handling of large state
+ * dimensions while exploiting the inherent sparsity in SLAM problems.
+ *
+ * After each optimization iteration, the prior must be updated on-manifold to account
+ * for the variable perturbations: A0 * (x + dx) = b0 becomes A0 * x = b0 - A0 * dx
+ *
+ * @tparam ScalarType The floating point type (typically float or double)
+ * @tparam Variables... The variable types this prior can contain
+ */
 template <typename ScalarType, typename... Variables>
 class GaussianPrior<Scalar<ScalarType>, VariableGroup<Variables...>> {
  public:
@@ -26,12 +47,14 @@ class GaussianPrior<Scalar<ScalarType>, VariableGroup<Variables...>> {
   using BV = BlockVector<Scalar<ScalarType>, Dimension<1>,
                          VariableGroup<Variables...>>;
 
-  SBM A0;  // Sparse Block Information Matrix.
+  /// Sparse block information matrix representing the prior uncertainty.
+  SBM A0;
 
-  BV b0;  // dense mean vector of the gaussian prior.
+  /// Dense mean vector of the Gaussian prior.
+  BV b0;
 
-  Eigen::Matrix<ScalarType, Eigen::Dynamic, 1>
-      temporaryVector;  // Preallocated vector.
+  /// Preallocated temporary vector for update computations.
+  Eigen::Matrix<ScalarType, Eigen::Dynamic, 1> temporaryVector;
 
   GaussianPrior() {}
 

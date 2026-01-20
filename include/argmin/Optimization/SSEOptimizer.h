@@ -13,6 +13,35 @@ namespace ArgMin
 template <typename...>
 class SSEOptimizer;
 
+/**
+ * @brief Sum of Squared Errors optimizer for manifold-based nonlinear least squares.
+ *
+ * SSEOptimizer is a generic nonlinear optimizer capable of performing Levenberg-Marquardt
+ * or Gauss-Newton optimization on manifold. It maintains a Gaussian prior for all variables
+ * in its state, stored in a sparse block format to efficiently handle large state dimensionality
+ * while exploiting sparsity.
+ *
+ * Designed primarily for windowed SLAM (Simultaneous Localization and Mapping) problems,
+ * SSEOptimizer supports:
+ * - Adding/removing variables and error terms dynamically
+ * - Marginalization of variables while preserving information through the Gaussian prior
+ * - Configurable optimization parameters (lambda, iterations, convergence thresholds)
+ *
+ * During each iteration, the optimizer builds a linear system from the prior and linearized
+ * error terms to solve for a perturbation that minimizes the sum of squared errors:
+ * @code
+ * (A_prior + J^T * W^(-1) * J) * dx = (b_prior + J^T * W^(-1) * e)
+ * @endcode
+ *
+ * @tparam ScalarType The floating point type (typically float or double)
+ * @tparam Solver The linear system solver type (e.g., PSDSchurSolver)
+ * @tparam Prior The Gaussian prior type (e.g., GaussianPrior)
+ * @tparam Marginalizer The marginalization strategy type
+ * @tparam Variables... The variable types that can be optimized (must be unique types)
+ * @tparam ErrorTerms... The error term types (must be unique types)
+ *
+ * @note Each variable type and error term type must be unique within the template parameters.
+ */
 template <typename ScalarType, typename Solver, typename Prior, typename Marginalizer, typename... Variables, typename... ErrorTerms>
 class SSEOptimizer<Scalar<ScalarType>, Solver, Prior, Marginalizer, VariableGroup<Variables...>, ErrorTermGroup<ErrorTerms...>>
 {
