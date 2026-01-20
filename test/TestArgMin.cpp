@@ -3,62 +3,24 @@
 
 #include <type_traits>
 
-#include "argmin/BlockVector.h"
-#include "argmin/ErrorTermBase.h"
-#include "argmin/GaussianPrior.h"
-#include "argmin/HuberLossFunction.h"
-#include "argmin/Key.h"
-#include "argmin/Marginalizer.h"
-#include "argmin/MetaHelpers.h"
-#include "argmin/PSDSchurSolver.h"
-#include "argmin/SSEOptimizer.h"
-#include "argmin/SparseBlockMatrix.h"
-#include "argmin/SparseBlockRow.h"
+#include "TestUtils.h"
+#include "argmin/Types/BlockVector.h"
+#include "argmin/ErrorTerms/ErrorTermBase.h"
+#include "argmin/Types/GaussianPrior.h"
+#include "argmin/Optimization/HuberLossFunction.h"
+#include "argmin/Containers/Key.h"
+#include "argmin/Optimization/Marginalizer.h"
+#include "argmin/Types/MetaHelpers.h"
+#include "argmin/Optimization/PSDSchurSolver.h"
+#include "argmin/Optimization/SSEOptimizer.h"
+#include "argmin/Types/SparseBlockMatrix.h"
+#include "argmin/Types/SparseBlockRow.h"
 #include "argmin/Variables/InverseDepth.h"
 #include "argmin/Variables/SE3.h"
 #include "argmin/Variables/SimpleScalar.h"
 
 using namespace ArgMin;
-
-class DifferentSimpleScalar : public SimpleScalar {
- public:
-  DifferentSimpleScalar(double val) : SimpleScalar(val) {}
-};
-
-class DifferenceErrorTerm
-    : public ErrorTermBase<Scalar<double>, Dimension<1>,
-                           VariableGroup<SimpleScalar, DifferentSimpleScalar>> {
- public:
-  DifferenceErrorTerm(VariableKey<SimpleScalar> key1,
-                      VariableKey<DifferentSimpleScalar> key2) {
-    std::get<0>(variableKeys) = key1;
-    std::get<1>(variableKeys) = key2;
-  }
-
-  template <typename... Variables>
-  void evaluate(VariableContainer<Variables...> &variables, bool relinearize) {
-    EXPECT_TRUE(checkVariablePointerConsistency(variables));
-
-    auto &var1 = *(std::get<0>(variablePointers));
-    auto &var2 = *(std::get<1>(variablePointers));
-
-    residual(0, 0) = var2.value - var1.value;
-
-    if (relinearize) {
-      auto &jac1 = (std::get<0>(variableJacobians));
-      auto &jac2 = (std::get<1>(variableJacobians));
-
-      jac1(0, 0) = -1;
-      jac2(0, 0) = 1;
-
-      linearizationValid = true;
-    } else {
-      linearizationValid = false;
-    }
-
-    information.setIdentity();
-  }
-};
+using namespace ArgMin::Test;
 
 TEST(ArgMin, Basic) {}
 
