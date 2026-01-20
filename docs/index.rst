@@ -13,13 +13,6 @@ ArgMin is a C++20 library originally designed for sliding window estimation in v
 
 .. toctree::
    :maxdepth: 2
-   :caption: Design Documentation
-
-   SSEOptimizer
-   SlotMap
-
-.. toctree::
-   :maxdepth: 2
    :caption: API Reference
 
    api/index

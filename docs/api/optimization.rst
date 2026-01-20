@@ -4,20 +4,14 @@ Optimization
 SSEOptimizer
 ------------
 
-.. doxygenclass:: ArgMin::SSEOptimizer
-   :members:
-   :undoc-members:
+.. doxygenfile:: argmin/Optimization/SSEOptimizer.h
 
 Marginalizer
 ------------
 
-.. doxygenclass:: ArgMin::Marginalizer
-   :members:
-   :undoc-members:
+.. doxygenfile:: argmin/Optimization/Marginalizer.h
 
 PSDSchurSolver
 --------------
 
-.. doxygenclass:: ArgMin::PSDSchurSolver
-   :members:
-   :undoc-members:
+.. doxygenfile:: argmin/Optimization/PSDSchurSolver.h

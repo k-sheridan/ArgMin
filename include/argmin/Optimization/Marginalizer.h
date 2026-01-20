@@ -17,10 +17,25 @@ template <typename... T>
 class Marginalizer;
 
 /**
- * The marginalizer is a class which is responsible for approximating the effect
- * of a variable's error terms on the rest of the variables.
- * This is done by approximating all error terms involving the error terms
- * with a single gaussian prior through the schur complement.
+ * @brief Removes variables from the optimization problem while preserving information.
+ *
+ * The Marginalizer approximates the effect of a variable's error terms on the remaining
+ * variables by computing the Schur complement. When a variable is marginalized:
+ *
+ * 1. All error terms involving the variable are linearized at the current estimate
+ * 2. Their quadratic approximation (J^T * W * J) is added to the Gaussian prior
+ * 3. The Schur complement is computed to project information onto remaining variables
+ * 4. The marginalized variable and its error terms are removed
+ *
+ * The Schur complement computes: A_remain = A_remain - B^T * inv(A_marg) * B
+ * where B represents the off-diagonal blocks connecting marginalized and remaining variables.
+ *
+ * This is essential for sliding window estimation where old variables must be removed
+ * while preserving their constraining effect on the remaining state.
+ *
+ * @tparam ScalarType The floating point type (typically float or double)
+ * @tparam Variables... The variable types in the optimization problem
+ * @tparam ErrorTerms... The error term types in the optimization problem
  */
 template <typename ScalarType, typename... Variables, typename... ErrorTerms>
 class Marginalizer<Scalar<ScalarType>, VariableGroup<Variables...>,

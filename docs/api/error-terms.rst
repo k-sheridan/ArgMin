@@ -4,20 +4,9 @@ Error Terms
 ErrorTermBase
 -------------
 
-.. doxygenclass:: ArgMin::ErrorTermBase
-   :members:
-   :undoc-members:
+.. doxygenfile:: argmin/ErrorTerms/ErrorTermBase.h
 
 ErrorTermValidator
 ------------------
 
-.. doxygenclass:: ArgMin::ErrorTermValidator
-   :members:
-   :undoc-members:
-
-HuberLossFunction
------------------
-
-.. doxygenclass:: ArgMin::HuberLossFunction
-   :members:
-   :undoc-members:
+.. doxygenfile:: argmin/ErrorTerms/ErrorTermValidator.h

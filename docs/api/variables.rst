@@ -4,34 +4,24 @@ Variables
 OptimizableVariable
 -------------------
 
-.. doxygenclass:: ArgMin::OptimizableVariable
-   :members:
-   :undoc-members:
+.. doxygenfile:: argmin/Variables/OptimizableVariable.h
 
 SE3
 ---
 
-.. doxygenclass:: ArgMin::SE3
-   :members:
-   :undoc-members:
+.. doxygenfile:: argmin/Variables/SE3.h
 
 SO3
 ---
 
-.. doxygenclass:: ArgMin::SO3
-   :members:
-   :undoc-members:
+.. doxygenfile:: argmin/Variables/SO3.h
 
 InverseDepth
 ------------
 
-.. doxygenclass:: ArgMin::InverseDepth
-   :members:
-   :undoc-members:
+.. doxygenfile:: argmin/Variables/InverseDepth.h
 
 SimpleScalar
 ------------
 
-.. doxygenclass:: ArgMin::SimpleScalar
-   :members:
-   :undoc-members:
+.. doxygenfile:: argmin/Variables/SimpleScalar.h

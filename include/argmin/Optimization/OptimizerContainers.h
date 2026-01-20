@@ -7,6 +7,18 @@
 namespace ArgMin
 {
 
+/**
+ * @brief Type-safe container for storing multiple types of optimizable variables.
+ *
+ * VariableContainer stores variables in a tuple of SlotMaps, one for each variable type.
+ * This design allows the SSEOptimizer to be generic while providing O(1) access to variables
+ * by their keys and efficient iteration over variables of a specific type.
+ *
+ * The container also provides utilities for computing variable indices within a flattened
+ * state vector, which is essential for building the linear system during optimization.
+ *
+ * @tparam Variables... The variable types to store (must be unique types)
+ */
 template <typename... Variables>
 class VariableContainer
 {
@@ -91,7 +103,13 @@ public:
 };
 
 /**
- * Container for all error terms.
+ * @brief Type-safe container for storing multiple types of error terms.
+ *
+ * ErrorTermContainer stores error terms in a tuple of SlotMaps, one for each error term type.
+ * This allows the optimizer to efficiently manage error terms of different types while
+ * maintaining type safety and O(1) access by key.
+ *
+ * @tparam ErrorTerms... The error term types to store (must be unique types)
  */
 template <typename... ErrorTerms>
 class ErrorTermContainer

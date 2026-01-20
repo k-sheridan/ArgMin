@@ -4,20 +4,14 @@ Containers
 SlotMap
 -------
 
-.. doxygenclass:: ArgMin::SlotMap
-   :members:
-   :undoc-members:
+.. doxygenfile:: argmin/Containers/SlotMap.h
 
 SlotArray
 ---------
 
-.. doxygenclass:: ArgMin::SlotArray
-   :members:
-   :undoc-members:
+.. doxygenfile:: argmin/Containers/SlotArray.h
 
-SlotMapKeyBase
---------------
+Key
+---
 
-.. doxygenstruct:: ArgMin::SlotMapKeyBase
-   :members:
-   :undoc-members:
+.. doxygenfile:: argmin/Containers/Key.h

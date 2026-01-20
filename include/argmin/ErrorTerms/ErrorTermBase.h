@@ -12,16 +12,24 @@ template <typename...>
 class ErrorTermBase;
 
 /**
- * This serves as the base of a simple error term with only a handful of independent variables.
- * This base stores the linearized error term and the pointers to to extract the variables.
- * 
- * The derived error term may contain more information than this base class, but it MUST contain
- * a function: 
- * 
+ * @brief Base class for error terms that depend on a set of independent variables.
+ *
+ * Stores the linearized error term (Jacobians and residual) and keys to access
+ * the variables. Derived classes must implement an evaluate function:
+ *
+ * @code
  * void evaluate(VariableContainer<Variables...>& variables, bool relinearize);
- * 
- * This function must compute the residual given the variable states, and will compute the jacobians w.r.t to the variables
- * if relinearize is true. Check the linearizationValid flag before using the error term.
+ * @endcode
+ *
+ * The evaluate function must:
+ * 1. Compute the residual vector and store it in the `residual` member
+ * 2. If relinearize is true, compute the Jacobian of the residual with respect
+ *    to each independent variable and store them in `variableJacobians`
+ * 3. Set `linearizationValid` to true if linearization succeeded, false otherwise
+ *
+ * @tparam ScalarType The floating point type (typically float or double)
+ * @tparam ResidualDimension The dimension of the residual vector
+ * @tparam IndependentVariables... The variable types this error term depends on
  */
 template <int ResidualDimension, typename ScalarType, typename... IndependentVariables>
 class ErrorTermBase<Scalar<ScalarType>, Dimension<ResidualDimension>, VariableGroup<IndependentVariables...>>

@@ -4,27 +4,19 @@ Types
 SparseBlockMatrix
 -----------------
 
-.. doxygenclass:: ArgMin::SparseBlockMatrix
-   :members:
-   :undoc-members:
+.. doxygenfile:: argmin/Types/SparseBlockMatrix.h
 
 BlockVector
 -----------
 
-.. doxygenclass:: ArgMin::BlockVector
-   :members:
-   :undoc-members:
+.. doxygenfile:: argmin/Types/BlockVector.h
 
 GaussianPrior
 -------------
 
-.. doxygenclass:: ArgMin::GaussianPrior
-   :members:
-   :undoc-members:
+.. doxygenfile:: argmin/Types/GaussianPrior.h
 
 SparseBlockRow
 --------------
 
-.. doxygenclass:: ArgMin::SparseBlockRow
-   :members:
-   :undoc-members:
+.. doxygenfile:: argmin/Types/SparseBlockRow.h
