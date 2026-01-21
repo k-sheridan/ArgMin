@@ -1,17 +1,17 @@
 #include <gtest/gtest.h>
 
 #include "TestUtils.h"
-#include "argmin/Types/GaussianPrior.h"
-#include "argmin/Optimization/HuberLossFunction.h"
-#include "argmin/Optimization/Marginalizer.h"
-#include "argmin/Optimization/PSDSchurSolver.h"
-#include "argmin/Optimization/SSEOptimizer.h"
-#include "argmin/Variables/InverseDepth.h"
-#include "argmin/Variables/SE3.h"
-#include "argmin/Variables/SimpleScalar.h"
+#include "tangent/Types/GaussianPrior.h"
+#include "tangent/Optimization/HuberLossFunction.h"
+#include "tangent/Optimization/Marginalizer.h"
+#include "tangent/Optimization/PSDSchurSolver.h"
+#include "tangent/Optimization/SSEOptimizer.h"
+#include "tangent/Variables/InverseDepth.h"
+#include "tangent/Variables/SE3.h"
+#include "tangent/Variables/SimpleScalar.h"
 
-using namespace ArgMin;
-using namespace ArgMin::Test;
+using namespace Tangent;
+using namespace Tangent::Test;
 
 // =============================================================================
 // Type Definitions for Tests

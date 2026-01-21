@@ -4,17 +4,17 @@ Getting Started
 Installation
 ------------
 
-Add ArgMin to your CMake project using FetchContent:
+Add Tangent to your CMake project using FetchContent:
 
 .. code-block:: cmake
 
    include(FetchContent)
-   FetchContent_Declare(argmin
-     GIT_REPOSITORY https://github.com/k-sheridan/ArgMin.git
+   FetchContent_Declare(tangent
+     GIT_REPOSITORY https://github.com/k-sheridan/Tangent.git
      GIT_TAG main
    )
-   FetchContent_MakeAvailable(argmin)
-   target_link_libraries(your_target PRIVATE ArgMin::ArgMin)
+   FetchContent_MakeAvailable(tangent)
+   target_link_libraries(your_target PRIVATE Tangent::Tangent)
 
 
 Requirements
@@ -33,7 +33,7 @@ Using Docker:
 
 .. code-block:: bash
 
-   docker-compose up test       # Run all ArgMin tests
+   docker-compose up test       # Run all Tangent tests
    docker-compose up benchmark  # Run performance benchmarks
 
 
@@ -44,8 +44,8 @@ Quick Start
 
 .. code-block:: cpp
 
-   #include "argmin/ErrorTerms/ErrorTermBase.h"
-   using namespace ArgMin;
+   #include "tangent/ErrorTerms/ErrorTermBase.h"
+   using namespace Tangent;
 
    // Error term: wants two scalars to be equal
    class DifferenceError
@@ -79,9 +79,9 @@ Quick Start
 
 .. code-block:: cpp
 
-   #include "argmin/Optimization/SSEOptimizer.h"
-   #include "argmin/Optimization/PSDSchurSolver.h"
-   #include "argmin/Optimization/HuberLossFunction.h"
+   #include "tangent/Optimization/SSEOptimizer.h"
+   #include "tangent/Optimization/PSDSchurSolver.h"
+   #include "tangent/Optimization/HuberLossFunction.h"
 
    // Define optimizer type (typically a type alias)
    using Solver = PSDSchurSolver<
@@ -124,4 +124,4 @@ Quick Start
 - **Keys**: Type-safe handles for accessing variables/error terms in containers
 
 For a complete working example with SE3 poses and landmarks, see
-`test/TestSSEOptimizer.cpp <https://github.com/k-sheridan/ArgMin/blob/master/test/TestSSEOptimizer.cpp>`_.
+`test/TestSSEOptimizer.cpp <https://github.com/k-sheridan/Tangent/blob/master/test/TestSSEOptimizer.cpp>`_.

@@ -4,14 +4,14 @@ Optimization
 SSEOptimizer
 ------------
 
-.. doxygenfile:: argmin/Optimization/SSEOptimizer.h
+.. doxygenfile:: tangent/Optimization/SSEOptimizer.h
 
 Marginalizer
 ------------
 
-.. doxygenfile:: argmin/Optimization/Marginalizer.h
+.. doxygenfile:: tangent/Optimization/Marginalizer.h
 
 PSDSchurSolver
 --------------
 
-.. doxygenfile:: argmin/Optimization/PSDSchurSolver.h
+.. doxygenfile:: tangent/Optimization/PSDSchurSolver.h

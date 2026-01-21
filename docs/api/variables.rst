@@ -4,24 +4,24 @@ Variables
 OptimizableVariable
 -------------------
 
-.. doxygenfile:: argmin/Variables/OptimizableVariable.h
+.. doxygenfile:: tangent/Variables/OptimizableVariable.h
 
 SE3
 ---
 
-.. doxygenfile:: argmin/Variables/SE3.h
+.. doxygenfile:: tangent/Variables/SE3.h
 
 SO3
 ---
 
-.. doxygenfile:: argmin/Variables/SO3.h
+.. doxygenfile:: tangent/Variables/SO3.h
 
 InverseDepth
 ------------
 
-.. doxygenfile:: argmin/Variables/InverseDepth.h
+.. doxygenfile:: tangent/Variables/InverseDepth.h
 
 SimpleScalar
 ------------
 
-.. doxygenfile:: argmin/Variables/SimpleScalar.h
+.. doxygenfile:: tangent/Variables/SimpleScalar.h

@@ -1,12 +1,12 @@
 #include <benchmark/benchmark.h>
 
-#include "argmin/Types/SparseBlockRow.h"
-#include "argmin/Types/SparseBlockMatrix.h"
-#include "argmin/Optimization/OptimizerContainers.h"
-#include "argmin/Variables/SE3.h"
-#include "argmin/Variables/InverseDepth.h"
+#include "tangent/Types/SparseBlockRow.h"
+#include "tangent/Types/SparseBlockMatrix.h"
+#include "tangent/Optimization/OptimizerContainers.h"
+#include "tangent/Variables/SE3.h"
+#include "tangent/Variables/InverseDepth.h"
 
-using namespace ArgMin;
+using namespace Tangent;
 
 template <typename ScalarType = double>
 static void BM_SparseBlockRowDenseDotProduct(benchmark::State &state)
@@ -14,7 +14,7 @@ static void BM_SparseBlockRowDenseDotProduct(benchmark::State &state)
     SE3 pose;
     InverseDepth zinv;
 
-    using SBR = ArgMin::SparseBlockRow<Scalar<ScalarType>, Dimension<2>, ArgMin::VariableGroup<SE3, InverseDepth>>;
+    using SBR = Tangent::SparseBlockRow<Scalar<ScalarType>, Dimension<2>, Tangent::VariableGroup<SE3, InverseDepth>>;
 
     SBR sbr;
 
@@ -65,7 +65,7 @@ static void BM_SparseBlockRowDotProduct(benchmark::State &state)
     SE3 pose;
     InverseDepth zinv;
 
-    using SBR = ArgMin::SparseBlockRow<Scalar<ScalarType>, Dimension<2>, ArgMin::VariableGroup<SE3, InverseDepth>>;
+    using SBR = Tangent::SparseBlockRow<Scalar<ScalarType>, Dimension<2>, Tangent::VariableGroup<SE3, InverseDepth>>;
 
     SBR sbr;
 

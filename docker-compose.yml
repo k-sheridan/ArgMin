@@ -6,48 +6,48 @@ services:
     build:
       context: .
       target: builder
-    image: argmin:builder
+    image: tangent:builder
     volumes:
-      - .:/argmin
-      - build-cache:/argmin/build
-    working_dir: /argmin
+      - .:/tangent
+      - build-cache:/tangent/build
+    working_dir: /tangent
 
   # Run tests
   test:
     build:
       context: .
       target: test
-    image: argmin:test
+    image: tangent:test
     depends_on:
       - build
     volumes:
-      - .:/argmin
-      - build-cache:/argmin/build
-    command: ["./test/ArgMinTests", "--gtest_color=yes"]
+      - .:/tangent
+      - build-cache:/tangent/build
+    command: ["./test/TangentTests", "--gtest_color=yes"]
 
   # Run benchmarks
   benchmark:
     build:
       context: .
       target: benchmark
-    image: argmin:benchmark
+    image: tangent:benchmark
     depends_on:
       - build
     volumes:
-      - .:/argmin
-      - build-cache:/argmin/build
-    command: ["./bench/ArgMinBenchmarks", "--benchmark_repetitions=3"]
+      - .:/tangent
+      - build-cache:/tangent/build
+    command: ["./bench/TangentBenchmarks", "--benchmark_repetitions=3"]
 
   # Development environment
   dev:
     build:
       context: .
       target: dev
-    image: argmin:dev
+    image: tangent:dev
     volumes:
-      - .:/argmin
-      - build-cache:/argmin/build
-    working_dir: /argmin
+      - .:/tangent
+      - build-cache:/tangent/build
+    working_dir: /tangent
     stdin_open: true
     tty: true
     command: ["/bin/bash"]
@@ -57,9 +57,9 @@ services:
     build:
       context: .
       target: docs
-    image: argmin:docs
+    image: tangent:docs
     volumes:
-      - .:/argmin
+      - .:/tangent
     command: ["sh", "-c", "doxygen Doxyfile && sphinx-build -b html docs docs/_build/html"]
 
   # Serve documentation locally for preview
@@ -67,12 +67,12 @@ services:
     build:
       context: .
       target: docs
-    image: argmin:docs
+    image: tangent:docs
     volumes:
-      - .:/argmin
+      - .:/tangent
     ports:
       - "8000:8000"
-    working_dir: /argmin
+    working_dir: /tangent
     command: >
       sh -c "doxygen Doxyfile &&
              sphinx-build -b html docs docs/_build/html &&
@@ -84,33 +84,33 @@ services:
     build:
       context: .
       target: test-asan
-    image: argmin:test-asan
+    image: tangent:test-asan
     volumes:
-      - .:/argmin
-      - build-cache-asan:/argmin/build
-    command: ["./test/ArgMinTests", "--gtest_color=yes"]
+      - .:/tangent
+      - build-cache-asan:/tangent/build
+    command: ["./test/TangentTests", "--gtest_color=yes"]
 
   # ASAN benchmarks
   benchmark-asan:
     build:
       context: .
       target: benchmark-asan
-    image: argmin:benchmark-asan
+    image: tangent:benchmark-asan
     volumes:
-      - .:/argmin
-      - build-cache-asan:/argmin/build
-    command: ["./bench/ArgMinBenchmarks", "--benchmark_repetitions=3"]
+      - .:/tangent
+      - build-cache-asan:/tangent/build
+    command: ["./bench/TangentBenchmarks", "--benchmark_repetitions=3"]
 
   # TSAN tests
   test-tsan:
     build:
       context: .
       target: test-tsan
-    image: argmin:test-tsan
+    image: tangent:test-tsan
     volumes:
-      - .:/argmin
-      - build-cache-tsan:/argmin/build
-    command: ["./test/ArgMinTests", "--gtest_color=yes"]
+      - .:/tangent
+      - build-cache-tsan:/tangent/build
+    command: ["./test/TangentTests", "--gtest_color=yes"]
     # TSAN requires these security options to disable ASLR
     cap_add:
       - SYS_PTRACE
@@ -122,22 +122,22 @@ services:
     build:
       context: .
       target: test-ubsan
-    image: argmin:test-ubsan
+    image: tangent:test-ubsan
     volumes:
-      - .:/argmin
-      - build-cache-ubsan:/argmin/build
-    command: ["./test/ArgMinTests", "--gtest_color=yes"]
+      - .:/tangent
+      - build-cache-ubsan:/tangent/build
+    command: ["./test/TangentTests", "--gtest_color=yes"]
 
   # UBSAN benchmarks
   benchmark-ubsan:
     build:
       context: .
       target: benchmark-ubsan
-    image: argmin:benchmark-ubsan
+    image: tangent:benchmark-ubsan
     volumes:
-      - .:/argmin
-      - build-cache-ubsan:/argmin/build
-    command: ["./bench/ArgMinBenchmarks", "--benchmark_repetitions=3"]
+      - .:/tangent
+      - build-cache-ubsan:/tangent/build
+    command: ["./bench/TangentBenchmarks", "--benchmark_repetitions=3"]
 
 volumes:
   build-cache:

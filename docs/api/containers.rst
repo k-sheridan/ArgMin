@@ -4,14 +4,14 @@ Containers
 SlotMap
 -------
 
-.. doxygenfile:: argmin/Containers/SlotMap.h
+.. doxygenfile:: tangent/Containers/SlotMap.h
 
 SlotArray
 ---------
 
-.. doxygenfile:: argmin/Containers/SlotArray.h
+.. doxygenfile:: tangent/Containers/SlotArray.h
 
 Key
 ---
 
-.. doxygenfile:: argmin/Containers/Key.h
+.. doxygenfile:: tangent/Containers/Key.h

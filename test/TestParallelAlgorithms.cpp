@@ -1,6 +1,6 @@
 
-#include "argmin/ParallelAlgorithms/ParallelAlgorithms.h"
-#include "argmin/Utilities/Logging.h"
+#include "tangent/ParallelAlgorithms/ParallelAlgorithms.h"
+#include "tangent/Utilities/Logging.h"
 #include <random>
 
 #include <gtest/gtest.h>

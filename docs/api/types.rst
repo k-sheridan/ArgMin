@@ -4,19 +4,19 @@ Types
 SparseBlockMatrix
 -----------------
 
-.. doxygenfile:: argmin/Types/SparseBlockMatrix.h
+.. doxygenfile:: tangent/Types/SparseBlockMatrix.h
 
 BlockVector
 -----------
 
-.. doxygenfile:: argmin/Types/BlockVector.h
+.. doxygenfile:: tangent/Types/BlockVector.h
 
 GaussianPrior
 -------------
 
-.. doxygenfile:: argmin/Types/GaussianPrior.h
+.. doxygenfile:: tangent/Types/GaussianPrior.h
 
 SparseBlockRow
 --------------
 
-.. doxygenfile:: argmin/Types/SparseBlockRow.h
+.. doxygenfile:: tangent/Types/SparseBlockRow.h

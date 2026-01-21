@@ -1,9 +1,9 @@
-ArgMin Documentation
+Tangent Documentation
 ====================
 
 **Header-only generic optimizer for manifold-based nonlinear least squares**
 
-ArgMin is a C++20 library originally designed for sliding window estimation in visual SLAM and odometry.
+Tangent is a C++20 library originally designed for sliding window estimation in visual SLAM and odometry.
 
 .. toctree::
    :maxdepth: 2

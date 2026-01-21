@@ -2,12 +2,12 @@
 
 #include <random>
 
-#include "argmin/Variables/InverseDepth.h"
-#include "argmin/Variables/SE3.h"
-#include "argmin/Variables/SO3.h"
-#include "argmin/Variables/SimpleScalar.h"
+#include "tangent/Variables/InverseDepth.h"
+#include "tangent/Variables/SE3.h"
+#include "tangent/Variables/SO3.h"
+#include "tangent/Variables/SimpleScalar.h"
 
-using namespace ArgMin;
+using namespace Tangent;
 
 // =============================================================================
 // SE3 Tests

@@ -3,10 +3,10 @@
 
 #include <numeric>
 
-#include "argmin/Containers/SlotArray.h"
-#include "argmin/Containers/SlotMap.h"
+#include "tangent/Containers/SlotArray.h"
+#include "tangent/Containers/SlotMap.h"
 
-using namespace ArgMin;
+using namespace Tangent;
 
 template <typename T>
 struct TypedKey : public SlotMapKeyBase {};

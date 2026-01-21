@@ -1,8 +1,8 @@
-# ArgMin
+# Tangent
 
-[![Tests](https://github.com/k-sheridan/ArgMin/actions/workflows/test.yml/badge.svg)](https://github.com/k-sheridan/ArgMin/actions/workflows/test.yml)
-[![Benchmarks](https://github.com/k-sheridan/ArgMin/actions/workflows/benchmark.yml/badge.svg)](https://github.com/k-sheridan/ArgMin/actions/workflows/benchmark.yml)
-[![Documentation](https://github.com/k-sheridan/ArgMin/actions/workflows/docs.yml/badge.svg)](https://k-sheridan.github.io/ArgMin/)
+[![Tests](https://github.com/k-sheridan/Tangent/actions/workflows/test.yml/badge.svg)](https://github.com/k-sheridan/Tangent/actions/workflows/test.yml)
+[![Benchmarks](https://github.com/k-sheridan/Tangent/actions/workflows/benchmark.yml/badge.svg)](https://github.com/k-sheridan/Tangent/actions/workflows/benchmark.yml)
+[![Documentation](https://github.com/k-sheridan/Tangent/actions/workflows/docs.yml/badge.svg)](https://k-sheridan.github.io/Tangent/)
 
 **Header-only generic optimizer for manifold-based nonlinear least squares**
 
@@ -22,23 +22,23 @@ Originally designed for sliding window estimation in visual SLAM and odometry.
 **Add to your CMake project:**
 ```cmake
 include(FetchContent)
-FetchContent_Declare(argmin
-  GIT_REPOSITORY https://github.com/k-sheridan/ArgMin.git
+FetchContent_Declare(tangent
+  GIT_REPOSITORY https://github.com/k-sheridan/Tangent.git
   GIT_TAG main
 )
-FetchContent_MakeAvailable(argmin)
-target_link_libraries(your_target PRIVATE ArgMin::ArgMin)
+FetchContent_MakeAvailable(tangent)
+target_link_libraries(your_target PRIVATE Tangent::Tangent)
 ```
 
 ## Usage
 
-Refer to [test/TestArgMinExampleProblem.cpp](test/TestArgMinExampleProblem.cpp) for an example on how to use.
+Refer to [test/TestTangentExampleProblem.cpp](test/TestTangentExampleProblem.cpp) for an example on how to use.
 
 ## Testing & Benchmarking
 
 **Docker:**
 ```bash
-docker-compose up test       # Run All ArgMin tests
+docker-compose up test       # Run All Tangent tests
 docker-compose up benchmark  # Run performance benchmarks
 ```
 
@@ -51,4 +51,4 @@ docker-compose up benchmark  # Run performance benchmarks
 
 ## Notes 
 
-ArgMin was originally developed as part of the [QDVO (Quasi-Direct Visual Odometry)](https://github.com/k-sheridan/qdvo) project.
+Tangent was originally developed as part of the [QDVO (Quasi-Direct Visual Odometry)](https://github.com/k-sheridan/qdvo) project.

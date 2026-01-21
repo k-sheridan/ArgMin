@@ -2,12 +2,12 @@
 
 #include <gtest/gtest.h>
 
-#include "argmin/ErrorTerms/ErrorTermBase.h"
-#include "argmin/Variables/InverseDepth.h"
-#include "argmin/Variables/SE3.h"
-#include "argmin/Variables/SimpleScalar.h"
+#include "tangent/ErrorTerms/ErrorTermBase.h"
+#include "tangent/Variables/InverseDepth.h"
+#include "tangent/Variables/SE3.h"
+#include "tangent/Variables/SimpleScalar.h"
 
-namespace ArgMin::Test {
+namespace Tangent::Test {
 
 /**
  * A SimpleScalar variant for testing type safety.
@@ -64,14 +64,14 @@ class DifferenceErrorTerm
 class RelativeReprojectionError
     : public ErrorTermBase<
           Scalar<double>, Dimension<2>,
-          VariableGroup<ArgMin::SE3, ArgMin::SE3, ArgMin::InverseDepth>> {
+          VariableGroup<Tangent::SE3, Tangent::SE3, Tangent::InverseDepth>> {
  public:
   Eigen::Vector2d bearing;
   Eigen::Vector2d z;
 
-  RelativeReprojectionError(VariableKey<ArgMin::SE3> hostFrame,
-                            VariableKey<ArgMin::SE3> targetFrame,
-                            VariableKey<ArgMin::InverseDepth> dinv,
+  RelativeReprojectionError(VariableKey<Tangent::SE3> hostFrame,
+                            VariableKey<Tangent::SE3> targetFrame,
+                            VariableKey<Tangent::InverseDepth> dinv,
                             Eigen::Vector2d bearingMeasurement,
                             Eigen::Vector2d bearingInHost) {
     std::get<0>(variableKeys) = hostFrame;
@@ -150,9 +150,9 @@ class RelativeReprojectionError
 template <typename VariableContainerType>
 RelativeReprojectionError createReprojectionErrorTerm(
     VariableContainerType &variableContainer,
-    VariableKey<ArgMin::SE3> hostK,
-    VariableKey<ArgMin::SE3> targetK,
-    VariableKey<ArgMin::InverseDepth> dinvK,
+    VariableKey<Tangent::SE3> hostK,
+    VariableKey<Tangent::SE3> targetK,
+    VariableKey<Tangent::InverseDepth> dinvK,
     Eigen::Vector2d bearing) {
   const auto &dinv = variableContainer.at(dinvK).value;
   Eigen::Vector3d p =
@@ -163,4 +163,4 @@ RelativeReprojectionError createReprojectionErrorTerm(
   return RelativeReprojectionError(hostK, targetK, dinvK, z, bearing);
 }
 
-}  // namespace ArgMin::Test
+}  // namespace Tangent::Test

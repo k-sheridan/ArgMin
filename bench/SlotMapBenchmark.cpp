@@ -1,9 +1,9 @@
 
 #include <benchmark/benchmark.h>
 #include <algorithm>
-#include "argmin/Containers/SlotMap.h"
+#include "tangent/Containers/SlotMap.h"
 
-using namespace ArgMin;
+using namespace Tangent;
 
 static void BM_SlotMapInsert(benchmark::State &state)
 {

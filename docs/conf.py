@@ -5,7 +5,7 @@ import subprocess
 
 # -- Project information -----------------------------------------------------
 
-project = 'ArgMin'
+project = 'Tangent'
 copyright = '2024, Kevin Sheridan'
 author = 'Kevin Sheridan'
 version = '1.0.0'
@@ -28,7 +28,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', 'doxygen']
 
 html_theme = 'furo'
 html_static_path = ['_static']
-html_title = 'ArgMin'
+html_title = 'Tangent'
 
 # Furo theme options
 html_theme_options = {
@@ -47,9 +47,9 @@ html_theme_options = {
 # -- Breathe configuration ---------------------------------------------------
 
 breathe_projects = {
-    'ArgMin': os.path.join(os.path.dirname(__file__), 'doxygen/xml')
+    'Tangent': os.path.join(os.path.dirname(__file__), 'doxygen/xml')
 }
-breathe_default_project = 'ArgMin'
+breathe_default_project = 'Tangent'
 breathe_default_members = ('members', 'undoc-members')
 
 # -- MyST configuration (for markdown support) -------------------------------
