@@ -5,7 +5,6 @@
 
 #include "tangent/Differentiation/Jet.h"
 #include "tangent/Differentiation/JetTraits.h"
-#include "tangent/Differentiation/JetVariable.h"
 #include "tangent/Differentiation/NumericalDifferentiator.h"
 #include "tangent/ErrorTerms/AutoDiffErrorTerm.h"
 #include "tangent/ErrorTerms/ErrorTermValidator.h"
@@ -231,7 +230,7 @@ TEST(JetVariableTest, SE3LiftingPreservesValue) {
   SE3 pose;
   pose.value = Sophus::SE3d::rotX(0.1) * Sophus::SE3d::trans(1, 2, 3);
 
-  auto lifted = liftSE3<double, 6>(pose, 0);
+  auto lifted = liftToJet<double, 6>(pose, 0);
 
   // Value should match original rotation matrix
   Eigen::Matrix3d R = pose.value.rotationMatrix();
@@ -254,7 +253,7 @@ TEST(JetVariableTest, SE3LiftingDerivatives) {
   SE3 pose;
   pose.value = Sophus::SE3d::trans(1, 2, 3);  // Identity rotation
 
-  auto lifted = liftSE3<double, 6>(pose, 0);
+  auto lifted = liftToJet<double, 6>(pose, 0);
 
   // For identity rotation, perturbation in omega should affect rotation as:
   // R * exp(omega) ≈ R * (I + [omega]_x)
@@ -271,7 +270,7 @@ TEST(JetVariableTest, SO3LiftingPreservesValue) {
   SO3 rot;
   rot.value = Sophus::SO3d::exp(Eigen::Vector3d(0.1, 0.2, 0.3));
 
-  auto lifted = liftSO3<double, 3>(rot, 0);
+  auto lifted = liftToJet<double, 3>(rot, 0);
 
   Eigen::Matrix3d R = rot.value.matrix();
   auto liftedR = lifted.matrix();
@@ -285,7 +284,7 @@ TEST(JetVariableTest, SO3LiftingPreservesValue) {
 TEST(JetVariableTest, InverseDepthLifting) {
   InverseDepth dinv(0.5);
 
-  auto lifted = liftInverseDepth<double, 1>(dinv, 0);
+  auto lifted = liftToJet<double, 1>(dinv, 0);
 
   EXPECT_DOUBLE_EQ(lifted.a, 0.5);
   EXPECT_DOUBLE_EQ(lifted.v(0), 1.0);  // d(dinv)/d(dinv) = 1
@@ -294,7 +293,7 @@ TEST(JetVariableTest, InverseDepthLifting) {
 TEST(JetVariableTest, SimpleScalarLifting) {
   SimpleScalar scalar(42.0);
 
-  auto lifted = liftSimpleScalar<double, 1>(scalar, 0);
+  auto lifted = liftToJet<double, 1>(scalar, 0);
 
   EXPECT_DOUBLE_EQ(lifted.a, 42.0);
   EXPECT_DOUBLE_EQ(lifted.v(0), 1.0);
@@ -915,7 +914,7 @@ TEST(JetSophusIntegrationTest, SE3PointTransformation) {
   SE3 pose;
   pose.value = Sophus::SE3d::rotZ(0.1) * Sophus::SE3d::trans(1, 2, 3);
 
-  auto liftedPose = liftSE3<double, 6>(pose, 0);
+  auto liftedPose = liftToJet<double, 6>(pose, 0);
 
   using JetT = Jet<double, 6>;
   Eigen::Matrix<JetT, 3, 1> point;
@@ -940,7 +939,7 @@ TEST(JetSophusIntegrationTest, SE3Inverse) {
   SE3 pose;
   pose.value = Sophus::SE3d::rotY(0.2) * Sophus::SE3d::trans(1, 2, 3);
 
-  auto liftedPose = liftSE3<double, 6>(pose, 0);
+  auto liftedPose = liftToJet<double, 6>(pose, 0);
   auto liftedInverse = liftedPose.inverse();
 
   // T * T^-1 should be identity
@@ -966,7 +965,7 @@ TEST(JetSophusIntegrationTest, SO3LogMap) {
   SO3 rot;
   rot.value = Sophus::SO3d::exp(Eigen::Vector3d(0.1, 0.2, 0.3));
 
-  auto liftedRot = liftSO3<double, 3>(rot, 0);
+  auto liftedRot = liftToJet<double, 3>(rot, 0);
   auto logVec = liftedRot.log();
 
   // The log should approximately equal the original rotation vector

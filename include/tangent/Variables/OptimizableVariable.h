@@ -5,14 +5,33 @@
 namespace Tangent {
 
 /**
- * @brief Base class defining the interface for optimizable variables.
+ * @brief Base class for optimizable variables.
  *
- * Optimizable variables can be updated with a minimal-dimension perturbation vector
- * while internally storing a different representation.
+ * Variables store state that can be updated via a minimal-dimension perturbation.
+ * This enables manifold optimization where internal representation differs from
+ * the tangent space (e.g., quaternion vs axis-angle for rotations).
+ *
+ * ## Required Interface
  *
  * Derived classes must provide:
- * - A static `dimension` constant specifying the perturbation dimension
- * - An `update(delta)` method that applies the perturbation on-manifold
+ * - `static const size_t dimension` - Tangent space dimension
+ * - `void update(const Eigen::Matrix<scalar_type, dimension, 1>& dx)` - Apply
+ *   perturbation
+ *
+ * The `update()` convention:
+ * - Euclidean spaces: `value += dx`
+ * - Lie groups (SE3, SO3): `value = value * exp(dx)` (right multiplication)
+ *
+ * ## Autodiff Support (Optional)
+ *
+ * To enable automatic differentiation with AutoDiffErrorTerm, implement these
+ * free functions in the Tangent namespace alongside your variable:
+ *
+ * - `liftToJet<T, N>(const Variable& var, int offset)` - Lift to Jet space
+ *   with seeded derivatives starting at the given offset index.
+ * - `getValue(const Variable& var)` - Extract raw value for residual-only path.
+ *
+ * See SE3.h for an example implementation.
  *
  * @tparam ScalarType The floating point type (typically float or double)
  * @tparam Dimension The dimension of the minimal perturbation vector

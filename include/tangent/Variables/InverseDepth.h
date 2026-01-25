@@ -2,6 +2,7 @@
 
 #include <limits>
 
+#include "tangent/Differentiation/Jet.h"
 #include "tangent/Variables/OptimizableVariable.h"
 
 namespace Tangent {
@@ -37,5 +38,20 @@ class InverseDepth : public Tangent::OptimizableVariable<double, 1> {
     }
   }
 };
+
+// ============================================================================
+// Autodiff Support
+// ============================================================================
+
+/// Extract raw value for residual-only computation.
+inline double getValue(const InverseDepth &dinv) { return dinv.value; }
+
+/**
+ * @brief Lift InverseDepth to Jet space for automatic differentiation.
+ */
+template <typename T, int N>
+Jet<T, N> liftToJet(const InverseDepth &dinv, int offset) {
+  return Jet<T, N>(static_cast<T>(dinv.value), offset);
+}
 
 }  // namespace Tangent

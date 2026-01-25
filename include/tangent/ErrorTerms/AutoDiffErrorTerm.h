@@ -2,7 +2,6 @@
 
 #include "tangent/Differentiation/Jet.h"
 #include "tangent/Differentiation/JetTraits.h"
-#include "tangent/Differentiation/JetVariable.h"
 #include "tangent/ErrorTerms/ErrorTermBase.h"
 #include "tangent/Types/MetaHelpers.h"
 
@@ -218,12 +217,9 @@ class AutoDiffErrorTerm
    */
   template <size_t I>
   auto liftVariableAtIndex() const {
-    using VarType =
-        typename std::tuple_element<I,
-                                    std::tuple<IndependentVariables...>>::type;
     constexpr int offset = getVariableOffset<I>();
-    return liftVariable<ScalarType, TotalDim>(*std::get<I>(variablePointers),
-                                              offset);
+    return liftToJet<ScalarType, TotalDim>(*std::get<I>(variablePointers),
+                                           offset);
   }
 
   /**

@@ -2,6 +2,8 @@
 
 #include <sophus/se3.hpp>
 
+#include "tangent/Differentiation/Jet.h"
+#include "tangent/Differentiation/JetTraits.h"
 #include "tangent/Variables/OptimizableVariable.h"
 
 namespace Tangent {
@@ -28,5 +30,46 @@ class SE3 : public Tangent::OptimizableVariable<double, 6> {
     value.translation() += dx.block<3, 1>(3, 0);
   }
 };
+
+// ============================================================================
+// Autodiff Support
+// ============================================================================
+
+/// Extract raw value for residual-only computation.
+inline const Sophus::SE3d &getValue(const SE3 &se3) { return se3.value; }
+
+/**
+ * @brief Lift SE3 to Jet space for automatic differentiation.
+ * Parameterization: [omega(3), v(3)] matching update() convention.
+ */
+template <typename T, int N>
+Sophus::SE3<Jet<T, N>> liftToJet(const SE3 &se3, int offset) {
+  using JetT = Jet<T, N>;
+
+  Eigen::Quaternion<JetT> q;
+  q.w() = JetT(se3.value.unit_quaternion().w());
+  q.x() = JetT(se3.value.unit_quaternion().x());
+  q.y() = JetT(se3.value.unit_quaternion().y());
+  q.z() = JetT(se3.value.unit_quaternion().z());
+
+  Eigen::Matrix<JetT, 3, 1> t;
+  t(0) = JetT(se3.value.translation()(0));
+  t(1) = JetT(se3.value.translation()(1));
+  t(2) = JetT(se3.value.translation()(2));
+
+  Sophus::SE3<JetT> result(q, t);
+
+  // Seed perturbation
+  Eigen::Matrix<JetT, 6, 1> delta;
+  for (int i = 0; i < 6; ++i) {
+    delta(i) = JetT(T(0), offset + i);
+  }
+
+  result.so3() =
+      result.so3() * Sophus::SO3<JetT>::exp(delta.template head<3>());
+  result.translation() += delta.template tail<3>();
+
+  return result;
+}
 
 }  // namespace Tangent
