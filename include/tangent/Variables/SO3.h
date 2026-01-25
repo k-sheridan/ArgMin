@@ -13,7 +13,7 @@ namespace Tangent {
  *
  * The order of the delta vector is [wx,wy,wz].
  */
-class SO3 : public Tangent::OptimizableVariable<double, 3> {
+class SO3 : public OptimizableVariableBase<double, 3> {
  public:
   Sophus::SO3<double> value;
 

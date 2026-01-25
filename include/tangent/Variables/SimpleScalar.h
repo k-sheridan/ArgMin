@@ -5,7 +5,7 @@
 
 namespace Tangent {
 
-class SimpleScalar : public Tangent::OptimizableVariable<double, 1> {
+class SimpleScalar : public OptimizableVariableBase<double, 1> {
  public:
   double value;
 

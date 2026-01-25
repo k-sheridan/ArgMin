@@ -7,44 +7,30 @@ namespace Tangent {
 /**
  * @brief Base class for optimizable variables.
  *
- * Variables store state that can be updated via a minimal-dimension perturbation.
- * This enables manifold optimization where internal representation differs from
- * the tangent space (e.g., quaternion vs axis-angle for rotations).
+ * Derive from this class to create a new variable type. Derived classes must:
+ * - Call `update(dx)` to apply a perturbation vector
+ * - Optionally override `ensureUpdateIsRevertible(dx)` if the variable has
+ *   constraints (see InverseDepth.h for an example)
  *
- * ## Required Interface
+ * Update convention:
+ * - Euclidean: `value += dx`
+ * - Lie groups: `value = value * exp(dx)`
  *
- * Derived classes must provide:
- * - `static const size_t dimension` - Tangent space dimension
- * - `void update(const Eigen::Matrix<scalar_type, dimension, 1>& dx)` - Apply
- *   perturbation
+ * For autodiff support, also implement `getValue()` and `liftToJet()` free
+ * functions. See SE3.h for an example.
  *
- * The `update()` convention:
- * - Euclidean spaces: `value += dx`
- * - Lie groups (SE3, SO3): `value = value * exp(dx)` (right multiplication)
- *
- * ## Autodiff Support (Optional)
- *
- * To enable automatic differentiation with AutoDiffErrorTerm, implement these
- * free functions in the Tangent namespace alongside your variable:
- *
- * - `liftToJet<T, N>(const Variable& var, int offset)` - Lift to Jet space
- *   with seeded derivatives starting at the given offset index.
- * - `getValue(const Variable& var)` - Extract raw value for residual-only path.
- *
- * See SE3.h for an example implementation.
- *
- * @tparam ScalarType The floating point type (typically float or double)
- * @tparam Dimension The dimension of the minimal perturbation vector
+ * @tparam ScalarType Floating point type (float or double)
+ * @tparam Dimension Tangent space dimension (size of dx vector)
  */
 template <typename ScalarType, size_t Dimension>
-class OptimizableVariable {
+class OptimizableVariableBase {
  public:
   typedef ScalarType scalar_type;
-  /// The dimension of the minimal perturbation vector.
   static const size_t dimension = Dimension;
 
-  /// This function will modify a perturbation to ensure that
-  /// exp(dx)^(-1) = exp(-dx)
+  /// Clamps dx so that update(-dx) correctly reverses update(dx).
+  /// Override this if your variable has constraints (e.g., must stay positive).
+  /// Called by the optimizer before applying updates.
   void ensureUpdateIsRevertible(Eigen::Matrix<double, Dimension, 1> &dx) {}
 };
 

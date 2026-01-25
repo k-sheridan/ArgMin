@@ -15,7 +15,7 @@ namespace Tangent {
  *
  * The order of the delta vector is [rotation, translation].
  */
-class SE3 : public Tangent::OptimizableVariable<double, 6> {
+class SE3 : public OptimizableVariableBase<double, 6> {
  public:
   Sophus::SE3<double> value;
 
