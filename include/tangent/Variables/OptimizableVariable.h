@@ -5,27 +5,32 @@
 namespace Tangent {
 
 /**
- * @brief Base class defining the interface for optimizable variables.
+ * @brief Base class for optimizable variables.
  *
- * Optimizable variables can be updated with a minimal-dimension perturbation vector
- * while internally storing a different representation.
+ * Derive from this class to create a new variable type. Derived classes must:
+ * - Call `update(dx)` to apply a perturbation vector
+ * - Optionally override `ensureUpdateIsRevertible(dx)` if the variable has
+ *   constraints (see InverseDepth.h for an example)
  *
- * Derived classes must provide:
- * - A static `dimension` constant specifying the perturbation dimension
- * - An `update(delta)` method that applies the perturbation on-manifold
+ * Update convention:
+ * - Euclidean: `value += dx`
+ * - Lie groups: `value = value * exp(dx)`
  *
- * @tparam ScalarType The floating point type (typically float or double)
- * @tparam Dimension The dimension of the minimal perturbation vector
+ * For autodiff support, also implement `getValue()` and `liftToJet()` free
+ * functions. See SE3.h for an example.
+ *
+ * @tparam ScalarType Floating point type (float or double)
+ * @tparam Dimension Tangent space dimension (size of dx vector)
  */
 template <typename ScalarType, size_t Dimension>
-class OptimizableVariable {
+class OptimizableVariableBase {
  public:
   typedef ScalarType scalar_type;
-  /// The dimension of the minimal perturbation vector.
   static const size_t dimension = Dimension;
 
-  /// This function will modify a perturbation to ensure that
-  /// exp(dx)^(-1) = exp(-dx)
+  /// Clamps dx so that update(-dx) correctly reverses update(dx).
+  /// Override this if your variable has constraints (e.g., must stay positive).
+  /// Called by the optimizer before applying updates.
   void ensureUpdateIsRevertible(Eigen::Matrix<double, Dimension, 1> &dx) {}
 };
 

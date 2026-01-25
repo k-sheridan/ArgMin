@@ -8,6 +8,7 @@ add_executable(TangentTests
   TestVariableTypes.cpp
   TestMarginalization.cpp
   TestSSEOptimizer.cpp
+  TestAutoDiff.cpp
 )
 
 target_link_libraries(TangentTests PRIVATE
