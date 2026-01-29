@@ -139,6 +139,28 @@ services:
       - build-cache-ubsan:/tangent/build
     command: ["./bench/TangentBenchmarks", "--benchmark_repetitions=3"]
 
+  # Python bindings tests
+  python-test:
+    build:
+      context: .
+      dockerfile: python/Dockerfile
+    image: tangent:python
+    volumes:
+      - .:/tangent
+    command: pytest python/tests/ -v
+
+  # Python development environment
+  python-dev:
+    build:
+      context: .
+      dockerfile: python/Dockerfile
+    image: tangent:python
+    volumes:
+      - .:/tangent
+    stdin_open: true
+    tty: true
+    command: /bin/bash
+
 volumes:
   build-cache:
   build-cache-asan:
