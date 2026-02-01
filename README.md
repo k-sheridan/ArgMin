@@ -8,14 +8,16 @@
 
 # Tangent
 
-[![Tests](https://github.com/k-sheridan/Tangent/actions/workflows/test.yml/badge.svg)](https://github.com/k-sheridan/Tangent/actions/workflows/test.yml)
-[![Benchmarks](https://github.com/k-sheridan/Tangent/actions/workflows/benchmark.yml/badge.svg)](https://github.com/k-sheridan/Tangent/actions/workflows/benchmark.yml)
+[![cpp Tests](https://github.com/k-sheridan/Tangent/actions/workflows/test.yml/badge.svg)](https://github.com/k-sheridan/Tangent/actions/workflows/test.yml)
+[![cpp Benchmarks](https://github.com/k-sheridan/Tangent/actions/workflows/benchmark.yml/badge.svg)](https://github.com/k-sheridan/Tangent/actions/workflows/benchmark.yml)
+[![Python Tests](https://github.com/k-sheridan/Tangent/actions/workflows/python-test.yml/badge.svg)](https://github.com/k-sheridan/Tangent/actions/workflows/python-test.yml)
 [![Documentation](https://github.com/k-sheridan/Tangent/actions/workflows/docs.yml/badge.svg)](https://k-sheridan.github.io/Tangent/)
 
 **Header-only generic optimizer for manifold-based nonlinear least squares**
 
 ## Features
 
+- **Python** support through JIT compilation
 - SE3/SO3 manifold optimization with Lie algebra
 - Automatic differentiation (no manual Jacobians needed)
 - Sparse Schur complement solver
@@ -25,7 +27,7 @@
 
 ## Documentation
 
-### [Getting Started](https://k-sheridan.github.io/Tangent/getting-started.html)
+### [Getting Started](https://k-sheridan.github.io/Tangent/getting-started-python.html)
 
 Installation, requirements, and a quick start guide with code examples.
 
