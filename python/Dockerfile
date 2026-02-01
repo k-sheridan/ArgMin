@@ -1,11 +1,14 @@
 # Dockerfile for tangent_py development and testing
-# Uses Mambaforge for fast cppyy installation via pre-built binaries
+# Uses Miniforge for fast cppyy installation via pre-built binaries
 
-FROM condaforge/mambaforge:latest
+FROM condaforge/miniforge3:latest
 
 # Install cppyy with Python 3.10 (cppyy not available for 3.12 yet)
-RUN mamba install -y -c conda-forge python=3.10 cppyy numpy pytest && \
-    mamba clean -afy
+RUN conda install -y -c conda-forge python=3.10 cppyy numpy pytest && \
+    conda clean -afy
+
+# Verify cppyy loads correctly
+RUN python -c "import cppyy; print('cppyy', cppyy.__version__)"
 
 # Set working directory
 WORKDIR /tangent
