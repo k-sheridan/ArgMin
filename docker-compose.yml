@@ -134,6 +134,9 @@ services:
     volumes:
       - .:/tangent
     command: pytest python/tests/ -v
+    # cppyy's Cling JIT compiler needs to mmap executable memory
+    security_opt:
+      - seccomp=unconfined
 
 volumes:
   build-cache:
