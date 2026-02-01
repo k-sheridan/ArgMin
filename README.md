@@ -16,6 +16,7 @@
 
 ## Features
 
+- **Python** support through JIT compilation
 - SE3/SO3 manifold optimization with Lie algebra
 - Automatic differentiation (no manual Jacobians needed)
 - Sparse Schur complement solver
@@ -25,7 +26,7 @@
 
 ## Documentation
 
-### [Getting Started](https://k-sheridan.github.io/Tangent/getting-started.html)
+### [Getting Started](https://k-sheridan.github.io/Tangent/getting-started-python.html)
 
 Installation, requirements, and a quick start guide with code examples.
 
