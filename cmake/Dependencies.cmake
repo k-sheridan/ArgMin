@@ -1,39 +1,18 @@
 include(FetchContent)
 
-# Eigen3 (required)
-find_package(Eigen3 3.4 QUIET)
-if(NOT Eigen3_FOUND)
-  message(STATUS "Eigen3 not found, fetching from source...")
-  message(STATUS "Tip: Install system packages for faster builds:")
-  message(STATUS "  Ubuntu/Debian: sudo apt install libeigen3-dev")
-  message(STATUS "  macOS: brew install eigen")
-  FetchContent_Declare(eigen
-    GIT_REPOSITORY https://gitlab.com/libeigen/eigen.git
-    GIT_TAG 3.4.0
-    GIT_SHALLOW TRUE
-  )
-  FetchContent_MakeAvailable(eigen)
-else()
-  message(STATUS "Found Eigen3: ${Eigen3_DIR}")
-endif()
+# Eigen3 (required) - use git submodule
+message(STATUS "Using Eigen3 from git submodule at extern/eigen")
+set(EIGEN_BUILD_TESTING OFF CACHE BOOL "" FORCE)
+set(EIGEN_BUILD_DOC OFF CACHE BOOL "" FORCE)
+set(EIGEN_BUILD_BLAS OFF CACHE BOOL "" FORCE)
+set(EIGEN_BUILD_LAPACK OFF CACHE BOOL "" FORCE)
+add_subdirectory(${PROJECT_SOURCE_DIR}/extern/eigen)
 
-# Sophus (required)
-find_package(Sophus QUIET)
-if(NOT Sophus_FOUND)
-  message(STATUS "Sophus not found, fetching from source...")
-  message(STATUS "Tip: Ubuntu 22.04+: sudo apt install libsophus-dev")
-  message(STATUS "     macOS: brew install sophus")
-  FetchContent_Declare(sophus
-    GIT_REPOSITORY https://github.com/strasdat/Sophus.git
-    GIT_TAG 1.22.10
-    GIT_SHALLOW TRUE
-  )
-  set(BUILD_SOPHUS_TESTS OFF CACHE BOOL "" FORCE)
-  set(BUILD_SOPHUS_EXAMPLES OFF CACHE BOOL "" FORCE)
-  FetchContent_MakeAvailable(sophus)
-else()
-  message(STATUS "Found Sophus: ${Sophus_DIR}")
-endif()
+# Sophus (required) - use git submodule
+message(STATUS "Using Sophus from git submodule at extern/sophus")
+set(BUILD_SOPHUS_TESTS OFF CACHE BOOL "" FORCE)
+set(BUILD_SOPHUS_EXAMPLES OFF CACHE BOOL "" FORCE)
+add_subdirectory(${PROJECT_SOURCE_DIR}/extern/sophus)
 
 # spdlog (optional)
 if(TANGENT_USE_SPDLOG)

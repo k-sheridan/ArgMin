@@ -3,6 +3,7 @@
 #include <cassert>
 #include <cmath>
 #include <numeric>
+#include <sstream>
 #include <type_traits>
 
 #include "tangent/Types/BlockVector.h"
@@ -311,8 +312,10 @@ class PSDSchurSolver<Scalar<ScalarType>, LossFunction<LossFunctionType>,
           }
         }
         if (localResult == false) {
+          std::ostringstream oss;
+          oss << dx;
           LOG_ERROR("Update was invalid for a {} with an update of \n{}\n",
-                    typeid(ThisVariable).name(), dx);
+                    typeid(ThisVariable).name(), oss.str());
         }
         result = localResult && result;
       }

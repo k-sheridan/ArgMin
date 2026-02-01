@@ -2,13 +2,13 @@
 # Provides isolated build and test environment
 
 # Build stage
-FROM ubuntu:22.04 AS builder
+FROM ubuntu:24.04 AS builder
 
 # Prevent interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Install build dependencies and Tangent runtime dependencies
-# Note: libsophus-dev not available in Ubuntu 22.04, will use FetchContent
+# Eigen3 and Sophus are provided via git submodules (extern/)
 RUN apt-get update && apt-get install -y \
     build-essential \
     cmake \
@@ -16,7 +16,6 @@ RUN apt-get update && apt-get install -y \
     wget \
     ninja-build \
     libssl-dev \
-    libeigen3-dev \
     libspdlog-dev \
     libgtest-dev \
     libbenchmark-dev \
@@ -75,7 +74,7 @@ WORKDIR /tangent
 CMD ["/bin/bash"]
 
 # Documentation stage - generates Sphinx + Breathe documentation
-FROM ubuntu:22.04 AS docs
+FROM ubuntu:24.04 AS docs
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -88,14 +87,14 @@ RUN apt-get update && apt-get install -y \
 
 # Install Sphinx and dependencies
 COPY docs/requirements.txt /tmp/requirements.txt
-RUN pip3 install --no-cache-dir -r /tmp/requirements.txt
+RUN pip3 install --no-cache-dir --break-system-packages -r /tmp/requirements.txt
 
 WORKDIR /tangent
 
 CMD ["sh", "-c", "doxygen Doxyfile && sphinx-build -b html docs docs/_build/html"]
 
 # AddressSanitizer (ASAN) build stage - for memory safety testing
-FROM ubuntu:22.04 AS builder-asan
+FROM ubuntu:24.04 AS builder-asan
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -107,7 +106,6 @@ RUN apt-get update && apt-get install -y \
     wget \
     ninja-build \
     libssl-dev \
-    libeigen3-dev \
     libspdlog-dev \
     libgtest-dev \
     libbenchmark-dev \
@@ -146,7 +144,7 @@ WORKDIR /tangent/build
 CMD ["./bench/TangentBenchmarks", "--benchmark_repetitions=3"]
 
 # ThreadSanitizer (TSAN) build stage - for data race detection
-FROM ubuntu:22.04 AS builder-tsan
+FROM ubuntu:24.04 AS builder-tsan
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -157,7 +155,6 @@ RUN apt-get update && apt-get install -y \
     wget \
     ninja-build \
     libssl-dev \
-    libeigen3-dev \
     libspdlog-dev \
     libgtest-dev \
     libbenchmark-dev \
@@ -193,7 +190,7 @@ WORKDIR /tangent/build
 CMD ["./test/TangentTests", "--gtest_color=yes"]
 
 # UndefinedBehaviorSanitizer (UBSAN) build stage - for UB detection
-FROM ubuntu:22.04 AS builder-ubsan
+FROM ubuntu:24.04 AS builder-ubsan
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -204,7 +201,6 @@ RUN apt-get update && apt-get install -y \
     wget \
     ninja-build \
     libssl-dev \
-    libeigen3-dev \
     libspdlog-dev \
     libgtest-dev \
     libbenchmark-dev \
